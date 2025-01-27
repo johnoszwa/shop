@@ -84,6 +84,8 @@ class ShopCart
     {
         items.Add(item);
         Console.WriteLine($"{item} was added to cart.");
+        Console.WriteLine();
+
     }
 
     public void RemoveItem(string item)
