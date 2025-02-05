@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +10,37 @@ namespace ShoppingCart
     {
         static void Main(string[] args)
         {
-            ShopCart cart = new ShopCart();
+            Dictionary<string, ShopCart> users = new Dictionary<string, ShopCart>();
             List<string> menuOptions = new List<string>
             {
                 "1. View Item(s)",
                 "2. Add Item(s)",
                 "3. Remove Item(s)",
                 "4. Item Count",
-                "5. Go Back/Exit",
+                "5. Switch User",
+                "6. Go Back/Exit",
+
             };
             bool running = true;
-
+            string currentUser = null;
 
             while (running)
             {
+                if (currentUser == null)
+                {
+                    Console.WriteLine("Enter a Username:");
+                    currentUser=Console.ReadLine();
+
+                    if (!users.ContainsKey(currentUser))
+                    {
+                        users[currentUser] = new ShopCart();
+                        Console.WriteLine($"New user '{currentUser}' created");
+                    }
+                    else 
+                    {
+                        Console.WriteLine($"Welcome back {currentUser}");
+                    }
+                }
                 Console.WriteLine("Shopping Cart Menu:");
                 foreach (var choice in menuOptions)
                 {
@@ -33,28 +50,33 @@ namespace ShoppingCart
                 Console.Write("Pick an Option: ");
 
 
+
                 string option = Console.ReadLine();
 
 
                 switch (option)
                 {
                     case "1":
-                        cart.ViewItems();
+                        users[currentUser].ViewItems();
                         break;
                     case "2":
                         Console.Write("Enter item to add: ");
                         var addItem = Console.ReadLine();
-                        cart.AddItem(addItem);
+                        users[currentUser].AddItem(addItem);
                         break;
                     case "3":
                         Console.Write("Enter item to remove: ");
                         var removeItem = Console.ReadLine();
-                        cart.RemoveItem(removeItem);
+                        users[currentUser].RemoveItem(removeItem);
                         break;
                     case "4":
-                        Console.WriteLine($"Total items in cart: {cart.ItemCount()}");
+                        Console.WriteLine($"Total items in cart: {users[currentUser].ItemCount()}");
                         break;
                     case "5":
+                        currentUser = null; 
+                        Console.WriteLine("Switching user...");
+                        break;
+                    case "6":
                         running = false;
                         Console.WriteLine("Exiting...");
                         break;
