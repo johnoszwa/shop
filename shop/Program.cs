@@ -28,14 +28,14 @@ namespace ShoppingCart
                 if (currentUser == null)
                 {
                     Console.WriteLine("Enter a Username:");
-                    currentUser=Console.ReadLine();
+                    currentUser = Console.ReadLine();
 
                     if (!users.ContainsKey(currentUser))
                     {
                         users[currentUser] = new ShopCart();
                         Console.WriteLine($"New user '{currentUser}' created");
                     }
-                    else 
+                    else
                     {
                         Console.WriteLine($"Welcome back {currentUser}");
                     }
@@ -59,9 +59,17 @@ namespace ShoppingCart
                         users[currentUser].ViewItems();
                         break;
                     case "2":
-                        Console.Write("Enter item to add: ");
-                        var addItem = Console.ReadLine();
-                        cart.AddItem(addItem);
+                        Console.Write("Enter product name: ");
+                        var productName = Console.ReadLine();
+                        Console.Write("Enter price: ");
+                        if (!double.TryParse(Console.ReadLine(), out double price))
+                        {
+                            users[currentUser].AddItem(new Product(productName, price));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid price. Try again.");
+                        }
                         break;
                     case "3":
                         Console.Write("Enter item to remove: ");
@@ -72,7 +80,7 @@ namespace ShoppingCart
                         Console.WriteLine($"Total items in cart: {users[currentUser].ItemCount()}");
                         break;
                     case "5":
-                        currentUser = null; 
+                        currentUser = null;
                         Console.WriteLine("Switching user...");
                         break;
                     case "6":
