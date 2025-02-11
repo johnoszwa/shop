@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,7 +61,7 @@ namespace ShoppingCart
                     case "2":
                         Console.Write("Enter item to add: ");
                         var addItem = Console.ReadLine();
-                        users[currentUser].AddItem(addItem);
+                        cart.AddItem(addItem);
                         break;
                     case "3":
                         Console.Write("Enter item to remove: ");
@@ -91,70 +90,4 @@ namespace ShoppingCart
 
         }
     }
-}
-
-class ShopCart
-{
-    private List<string> items;
-
-    public ShopCart()
-    {
-        items = new List<string>();
-    }
-
-    public void AddItem(string item)
-    {
-        items.Add(item);
-        Console.WriteLine($"{item} was added to cart.");
-        Console.WriteLine();
-
-    }
-
-    public void RemoveItem(string item)
-    {
-        bool found = false;
-        foreach (string cartItem in items)
-        {
-            if (cartItem == item)
-            {
-                found = true;
-                break;
-            }
-
-        }
-
-        if (found)
-        {
-            items.Remove(item);
-            Console.WriteLine($"{item} was removed from cart.");
-
-        }
-        else
-        {
-            Console.WriteLine($"{item} was not found.");
-        }
-    }
-
-    public void ViewItems()
-    {
-        if (items.Count == 0)
-        {
-            Console.WriteLine("Cart empty");
-        }
-        else
-        {
-            Console.WriteLine("Here are the items in your cart: ");
-            foreach (string item in items)
-            {
-                Console.WriteLine($"- {item}");
-            }
-        }
-    }
-
-    public int ItemCount()
-    {
-        return items.Count;
-    }
-
-
 }
